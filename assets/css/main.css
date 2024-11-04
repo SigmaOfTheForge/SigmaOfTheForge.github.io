@@ -63,7 +63,7 @@ body
         .topnavSelected{
             background-color: darkslategrey;
             outline-width: 5px;
-            outline-color: darkslategrey;
+            outline-color: darkgoldenrod;
         }
 
 @media screen and (max-width: 600px){
