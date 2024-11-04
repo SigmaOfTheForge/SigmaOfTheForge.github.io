@@ -1,0 +1,60 @@
+﻿* {
+    box-sizing: border-box;
+}
+
+body 
+{
+    margin: 0;
+}
+
+.header 
+{
+    background-color: #850404;
+    padding: 20px;
+    color: goldenrod;
+    font-size: 130%;
+    text-align: center;
+}
+
+    .header h3 
+    {
+        text-decoration: wavy;
+        color: darkgoldenrod;
+    }
+
+.topnav 
+{
+    position: relative;
+    overflow: hidden;
+    background-color: #808080;
+}
+
+    .topnav a 
+    {
+        float: left;
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    .topnav-centered a 
+    {
+        position: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .topnav-right
+    {
+        float: right;
+    }
+
+        .topnav a:hover {
+            background-color: white;
+            color: #808080;
+            text-decoration: underline;
+            border: 3px #808080;
+        }
