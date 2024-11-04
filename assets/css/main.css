@@ -96,4 +96,6 @@ body
 
 .about img{
     float: right;
+    width: 20%;
+    height: 20%;
 }
