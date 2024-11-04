@@ -5,6 +5,7 @@
 body 
 {
     margin: 0;
+    background-color: darkgrey;
 }
 
 .header 
@@ -15,12 +16,15 @@ body
     font-size: 130%;
     text-align: center;
 }
+/* Header */
 
     .header h3 
     {
         text-decoration: wavy;
         color: darkgoldenrod;
     }
+
+/* Navigation Bar */
 
 .topnav 
 {
@@ -80,4 +84,11 @@ body
     }
 
 
+}
+
+/* About*/
+
+.about{
+    background-color: indianred;
+    margin: 20px 10px;
 }
