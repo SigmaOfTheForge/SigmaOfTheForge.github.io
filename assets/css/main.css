@@ -59,3 +59,25 @@ body
             text-decoration: underline;
             border: 3px #808080;
         }
+
+        .topnavSelected{
+            background-color: darkslategrey;
+            outline-width: 5px;
+            outline-color: darkslategrey;
+        }
+
+@media screen and (max-width: 600px){
+    .topnav a, .topnav-right{
+        float: none;
+        display: block;
+    }
+
+    .topnav-centered a {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+    }
+
+
+}
