@@ -87,6 +87,10 @@ body
 }
 
 /* About*/
+.about{
+    font-size:120%;
+}
+
 
 .about div {
     background-color: indianred;
