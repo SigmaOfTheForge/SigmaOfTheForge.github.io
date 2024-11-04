@@ -90,7 +90,7 @@ body
 
 .about{
     background-color: indianred;
-    margin: 20px 10px;
+    border: 5px dashed indianred;
 
 }
 
