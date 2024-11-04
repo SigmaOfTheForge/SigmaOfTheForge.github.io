@@ -91,4 +91,9 @@ body
 .about{
     background-color: indianred;
     margin: 20px 10px;
+
+}
+
+.about img{
+    float: right;
 }
