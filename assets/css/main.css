@@ -88,10 +88,9 @@ body
 
 /* About*/
 
-.about{
+.about div {
     background-color: indianred;
     border: 5px dashed indianred;
-
 }
 
 .about img{
