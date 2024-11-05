@@ -90,17 +90,16 @@ body
 }
 
 /* About*/
-.about
-{
-    font-size:120%;
-    
+.about {
+    font-size: 120%;
+    background-color: indianred;
+    border: 6px solid red;
 }
 
 
 .about div 
 {
-  background-color: indianred;
-  border: 6px solid red;
+
 }
 
 .about img
