@@ -88,7 +88,6 @@ body
 .centralPanel {
     font-size: 120%;
     background-color: indianred;
-    border: 6px solid green;
     margin: 50px;
     height: 300px;
 }
@@ -96,7 +95,5 @@ body
 .centralPanel img
 {
     float: right;
-    width: 20%;
-    height: 20%;
     object-fit: contain;
 }
