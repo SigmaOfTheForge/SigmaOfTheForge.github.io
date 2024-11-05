@@ -95,6 +95,6 @@ body
 .centralPanel img
 {
     float: right;
-    resize:vertical;
+    height: 300px;
     object-fit: contain;
 }
