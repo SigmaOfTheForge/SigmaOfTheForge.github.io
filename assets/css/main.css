@@ -10,12 +10,16 @@ body
 
 .header 
 {
-    background-color: #850404;
-    padding: 20px;
-    color: goldenrod;
-    font-size: 130%;
-    text-align: center;
+
 }
+
+    .header div {
+        background-color: #850404;
+        padding: 20px;
+        color: goldenrod;
+        font-size: 130%;
+        text-align: center;
+    }
 /* Header */
 
     .header h3 
