@@ -101,7 +101,9 @@ body
     margin: 50px;
     padding: 5px;
     width: 700px;*/
-    
+    width: 700px;
+    position: absolute;
+    background-color: indianred;
 }
 
 .about img{
