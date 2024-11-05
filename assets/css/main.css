@@ -63,14 +63,14 @@ body
             border: 3px #808080;
         }
 
-        .topnavSelected{
+        .topnavSelected {
             background-color: darkslategrey;
             outline-width: 5px;
             outline-color: darkgoldenrod;
         }
 
-@media screen and (max-width: 600px){
-    .topnav a, .topnav-right{
+@media screen and (max-width: 600px) {
+    .topnav a, .topnav-right {
         float: none;
         display: block;
     }
@@ -86,17 +86,20 @@ body
 }
 
 /* About*/
-.about{
+.about
+{
     font-size:120%;
     
 }
 
 
-.about div {
+.about div 
+{
   
 }
 
-.about img{
+.about img
+{
     float: right;
     width: 20%;
     height: 20%;
