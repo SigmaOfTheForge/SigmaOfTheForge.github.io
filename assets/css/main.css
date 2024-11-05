@@ -95,7 +95,8 @@ body
 
 .about div 
 {
-  
+  background-color: indianred;
+  border: 6px solid red;
 }
 
 .about img
