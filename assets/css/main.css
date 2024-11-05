@@ -30,8 +30,11 @@ body
 {
     position: relative;
     overflow: hidden;
-    background-color: #808080;
 }
+
+    .topnav div {
+        background-color: #808080;
+    }
 
     .topnav a 
     {
@@ -98,6 +101,7 @@ body
     margin: 50px;
     padding: 5px;
     width: 700px;*/
+    
 }
 
 .about img{
