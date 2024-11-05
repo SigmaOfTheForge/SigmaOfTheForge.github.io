@@ -90,13 +90,13 @@ body
 }
 
 /* About*/
-.about {
+.centralPanel {
     font-size: 120%;
     background-color: indianred;
     border: 6px solid red;
 }
 
-.about img
+.centralPanel img
 {
     float: right;
     width: 20%;
