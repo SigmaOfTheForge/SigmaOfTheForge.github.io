@@ -97,4 +97,5 @@ body
     float: right;
     height: 300px;
     object-fit: contain;
+    display:block;
 }
