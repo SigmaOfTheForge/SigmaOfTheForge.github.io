@@ -106,4 +106,5 @@ body
     object-fit: contain;
     display: block;
     padding: 0px;
+    vertical-align:middle;
 }
