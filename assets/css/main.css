@@ -93,6 +93,12 @@ body
     padding: 10px;
 }
 
+.centralPanel::after{
+    content: "";
+    clear: both;
+    display:table;
+}
+
 .centralPanel img
 {
     float: right;
