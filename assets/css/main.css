@@ -93,7 +93,7 @@ body
     padding: 10px;
 }
 
-.centralPanel::after{
+.centralPanel::after {
     content: "";
     clear: both;
     display:table;
@@ -105,5 +105,5 @@ body
     height: 300px;
     object-fit: contain;
     display: block;
-    margin:auto;
+    padding: 0px;
 }
