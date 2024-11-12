@@ -98,5 +98,6 @@ body
     float: right;
     height: 300px;
     object-fit: contain;
-    display:inline;
+    display: block;
+    margin:auto;
 }
