@@ -88,7 +88,7 @@ body
 .centralPanel {
     font-size: 120%;
     background-color: indianred;
-    margin: 50px;
+    margin: 80px;
     height: 300px;
 }
 
@@ -96,6 +96,10 @@ body
     content: "";
     clear: both;
     display: table;
+}
+
+.centralPanel text {
+    padding: 15px;
 }
 
 .centralPanel img
