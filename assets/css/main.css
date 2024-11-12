@@ -90,13 +90,12 @@ body
     background-color: indianred;
     margin: 50px;
     height: 300px;
-    padding: 10px;
 }
 
 .centralPanel::after {
     content: "";
     clear: both;
-    display:table;
+    display: table;
 }
 
 .centralPanel img
@@ -104,7 +103,5 @@ body
     float: right;
     height: 300px;
     object-fit: contain;
-    display: block;
-    padding: 0px;
     vertical-align:middle;
 }
