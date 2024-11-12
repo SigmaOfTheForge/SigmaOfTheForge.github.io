@@ -116,7 +116,7 @@ body
 }
 
 .centralVideo iframe{
-    position:center;
+    vertical-align: middle;
 }
 
 .centralVideo h2{
