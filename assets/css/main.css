@@ -89,7 +89,7 @@ body
     font-size: 120%;
     background-color: indianred;
     margin: 80px;
-    height: 300px;
+    height: 400px;
 }
 
 .centralPanel::after {
@@ -99,7 +99,7 @@ body
 }
 
 .centralPanel text {
-    padding: 15px;
+    padding-top:20px;
 }
 
 .centralPanel img
@@ -108,4 +108,18 @@ body
     height: 300px;
     object-fit: contain;
     vertical-align:middle;
+}
+
+
+.centralVideo{
+    
+}
+
+.centralVideo iframe{
+    position:center;
+}
+
+.centralVideo h2{
+    text-align:center;
+    color:goldenrod;
 }
