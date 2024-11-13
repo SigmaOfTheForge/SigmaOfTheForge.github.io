@@ -140,6 +140,10 @@ body
     
 }
 
+.centralGallery::after{
+    clear:both;
+}
+
     .centralGallery-content {
         margin: 5px;
         float: left;
