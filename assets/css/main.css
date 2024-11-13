@@ -105,7 +105,7 @@ body
 .centralPanel img
 {
     float: right;
-    height: 300px;
+    height: 400px;
     object-fit: contain;
     vertical-align:middle;
 }
