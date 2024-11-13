@@ -147,6 +147,7 @@ body
         .centralGallery-content img {
             object-fit: contain;
             width: 200px;
+            height: 200px;
         }
 
     .centralGallery-desc {
