@@ -143,10 +143,10 @@ body
     .centralGallery-content {
         margin: 5px;
         float: left;
-        width: 200px;
     }
-        .centralGallery-content img{
-            object-fit:contain;
+        .centralGallery-content img {
+            object-fit: contain;
+            width: 200px;
         }
 
     .centralGallery-desc {
