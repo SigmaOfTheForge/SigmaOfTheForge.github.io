@@ -140,13 +140,16 @@ body
     
 }
 
-.centralGallery-content {
-    margin: 5px;
-    float: left;
-    width: 200px;
-}
+    .centralGallery-content {
+        margin: 5px;
+        float: left;
+        width: 200px;
+    }
+        .centralGallery-content img{
+            object-fit:contain;
+        }
 
-.centralGallery-desc {
-    padding: 15px;
-    text-align:center;
-}
+    .centralGallery-desc {
+        padding: 15px;
+        text-align:center;
+    }
