@@ -112,14 +112,17 @@ body
 
 
 .centralVideo{
-    
+    margin: 10px;
 }
 
 .centralVideo iframe{
     vertical-align: middle;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .centralVideo h2{
     text-align:center;
-    color:goldenrod;
+    color:darkgoldenrod;
 }
