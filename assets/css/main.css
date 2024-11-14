@@ -138,16 +138,16 @@ body
 
 .centralGallery {
     vertical-align:middle;
-
+    display:block;
     background-color:darkslategrey;
 }
 
 
     .centralGallery-content {
         margin: 5px;
-        margin-bottom:20px;
+        margin-bottom: 20px;
         float: left;
-        background-color:greenyellow;
+        background-color: greenyellow;
     }
         .centralGallery-content img {
             object-fit: contain;
