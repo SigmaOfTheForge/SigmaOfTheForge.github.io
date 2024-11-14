@@ -137,12 +137,9 @@ body
 
 .centralGallery {
     margin: 20px;
-    
+    margin-bottom: auto;
 }
 
-.centralGallery::after{
-    clear:both;
-}
 
     .centralGallery-content {
         margin: 5px;
