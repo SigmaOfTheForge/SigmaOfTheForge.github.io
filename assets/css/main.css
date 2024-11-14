@@ -137,9 +137,7 @@ body
 }
 
 .centralGallery {
-    vertical-align:middle;
-    display:block;
-    background-color:darkslategrey;
+    
 }
 
 
@@ -148,6 +146,8 @@ body
         margin-bottom: 20px;
         float: left;
         background-color: greenyellow;
+        padding: 5px;
+        text-align:center;
     }
         .centralGallery-content img {
             object-fit: contain;
