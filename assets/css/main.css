@@ -147,7 +147,7 @@ body
         margin: 5px;
         margin-bottom:20px;
         float: left;
-        background-color:firebrick;
+        background-color:greenyellow;
     }
         .centralGallery-content img {
             object-fit: contain;
