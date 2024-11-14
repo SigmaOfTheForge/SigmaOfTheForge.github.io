@@ -137,7 +137,9 @@ body
 
 .centralGallery {
     margin: 20px;
-    block-size:auto;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 
