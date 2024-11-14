@@ -148,6 +148,7 @@ body
     .centralGallery-content {
         margin: 5px;
         float: left;
+        background-color:firebrick;
     }
         .centralGallery-content img {
             object-fit: contain;
