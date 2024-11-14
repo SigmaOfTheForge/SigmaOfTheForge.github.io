@@ -137,7 +137,7 @@ body
 
 .centralGallery {
     margin: 20px;
-    margin-bottom: 60px;
+    block-size:auto;
 }
 
 
