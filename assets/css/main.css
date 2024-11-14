@@ -143,10 +143,11 @@ body
 
 
     .centralGallery-content {
+        align-content:center;
         margin: 10px;
         margin-bottom: 20px;
         float: left;
-        background-color: mediumorchid;
+        background-color: turquoise;
         padding: 5px;
         text-align:center;
     }
