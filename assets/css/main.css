@@ -124,6 +124,7 @@ body
 }
 
 .centralVideo iframe{
+    margin-top: 20px;
     vertical-align: middle;
     display: block;
     margin-left: auto;
