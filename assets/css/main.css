@@ -136,7 +136,7 @@ body
 }
 
 .centralGallery {
-    margin: 80px;
+vertical-align:middle;
     display:block;
     margin-left:auto;
     margin-right:auto;
