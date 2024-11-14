@@ -137,7 +137,7 @@ body
 }
 
 .centralGallery {
-    width:contain;
+    width:auto;
     margin: 0px auto;
 }
 
