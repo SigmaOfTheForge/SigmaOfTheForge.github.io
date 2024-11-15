@@ -139,19 +139,19 @@ body
 .centralGallery {
     width:1000px;
     margin: 0px auto;
-    text-align:center;
 }
 
 
-    .centralGallery-content {
-        display:inline;
-        margin: 10px;
-        margin-bottom: 20px;
-        float: left;
-        background-color: darkslategrey;
-        padding: 5px;
-        text-align:center;
-    }
+.centralGallery-content {
+    display: inline;
+    text-align: center;
+    margin: 10px;
+    margin-bottom: 20px;
+    float: left;
+    background-color: darkslategrey;
+    padding: 5px;
+    text-align: center;
+}
         .centralGallery-content img {
             object-fit: contain;
             width: 200px;
