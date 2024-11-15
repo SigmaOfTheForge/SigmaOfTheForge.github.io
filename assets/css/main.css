@@ -143,8 +143,9 @@ body
 
 
     .centralGallery-content {
-        align-content:center;
-        margin: 10px;
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
         margin-bottom: 20px;
         float: left;
         background-color: palevioletred;
