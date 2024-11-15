@@ -139,10 +139,12 @@ body
 .centralGallery {
     width:1000px;
     margin: 0px auto;
+    text-align:center;
 }
 
 
     .centralGallery-content {
+        display:inline;
         margin: 10px;
         margin-bottom: 20px;
         float: left;
