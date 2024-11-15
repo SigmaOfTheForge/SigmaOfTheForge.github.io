@@ -137,14 +137,13 @@ body
 }
 
 .centralGallery {
-  
+    text-align: center;
     margin: 0px auto;
 }
 
 
 .centralGallery-content {
     display: inline;
-    text-align: center;
     margin: 10px;
     margin-bottom: 20px;
     float: left;
