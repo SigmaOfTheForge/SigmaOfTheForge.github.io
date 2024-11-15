@@ -137,8 +137,13 @@ body
 }
 
 .centralGallery {
-    text-align: center;
+    width: 80%;
     margin: 0px auto;
+}
+
+.centralGallery h1 {
+    text-align:center;
+    color: white;
 }
 
 
@@ -160,4 +165,12 @@ body
     .centralGallery-desc {
         padding: 15px;
         text-align:center;
+    }
+
+    .centralGallery-desc h3{
+        font-size: 50%;
+    }
+
+    .centralGallery-desc p{
+        font-size: 50%;
     }
