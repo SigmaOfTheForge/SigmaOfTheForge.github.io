@@ -168,9 +168,9 @@ body
     }
 
     .centralGallery-desc h3{
-        font-size: 50%;
+        line-height: 4px;
     }
 
     .centralGallery-desc p{
-        font-size: 50%;
+      
     }
