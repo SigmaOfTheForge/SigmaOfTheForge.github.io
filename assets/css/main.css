@@ -143,9 +143,7 @@ body
 
 
     .centralGallery-content {
-        display:block;
-        margin-left:auto;
-        margin-right:auto;
+        margin: 10px;
         margin-bottom: 20px;
         float: left;
         background-color: palevioletred;
