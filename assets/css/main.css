@@ -23,7 +23,10 @@ body
         color: darkgoldenrod;
     }
 
-
+.pageHeader{
+    max-height: 400px;
+    object-fit: cover;
+}
 
 .pageHeader-title {
     margin: 50%;
