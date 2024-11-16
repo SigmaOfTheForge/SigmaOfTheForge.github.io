@@ -149,8 +149,10 @@ body
 
 .centralGallery-content {
     display: inline-block;
-    margin: 10px;
+    margin-top: 10px;
     margin-bottom: 20px;
+    margin-left: auto;
+    margin-right:auto;
     float: left;
     background-color: darkslategrey;
     padding: 5px;
