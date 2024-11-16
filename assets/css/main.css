@@ -23,6 +23,16 @@ body
         color: darkgoldenrod;
     }
 
+
+
+.pageHeader-title {
+    margin: 50%;
+    background-color: ghostwhite;
+    border: 5px solid goldenrod;
+    border-radius: 50px;
+    text-align: center;
+}
+
 /* Navigation Bar */
 
 .topnav {
@@ -152,7 +162,7 @@ body
     margin: 10px;
     margin-bottom: 20px;
     float: left;
-    background-color: darkslategrey;
+    background-color: grey;
     padding: 5px;
     text-align: center;
 }
@@ -174,5 +184,7 @@ body
     }
 
     .centralGallery-desc p{
-      
+      line-height:4px;
     }
+
+
