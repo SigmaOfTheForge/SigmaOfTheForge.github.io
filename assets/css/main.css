@@ -204,7 +204,7 @@ body
     padding: 40px;
     text-align: center;
     font-size: 150%;
-    max-width: 400px;
+    max-width: 70%;
     margin: 0px auto;
 }
 
@@ -224,7 +224,7 @@ body
 /* Image panel- Left and Right*/
 .imagePanelLeft, .imagePanelRight {
     min-height: 300px;
-    margin: 0 5%;
+    margin: 0 10%;
 }
 
     .imagePanelLeft::after, .imagePanelRight::after {
