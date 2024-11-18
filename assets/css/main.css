@@ -139,7 +139,7 @@ body
         vertical-align:middle;
     }
 
-
+/* Video*/
 .centralVideo{
     margin: 10px;
 }
@@ -156,6 +156,8 @@ body
     text-align:center;
     color:darkgoldenrod;
 }
+
+/* Link Gallery */
 
 .centralGallery {
     width: 80%;
@@ -198,7 +200,14 @@ body
       line-height:4px;
     }
 
+.centralText {
+    padding: 40px;
+    text-align:center;
+    font-size: 150%;
+    max-width: 400px;
+}
 
+/* Project Header */
 .projectTitle {
     background-color: lightgray;
     min-height: 300px;
@@ -209,4 +218,38 @@ body
 .projectTitle p{
     max-width: 700px;
 }
+
+
+/* Image panel- Left and Right*/
+.imagePanelLeft, .imagePanelRight {
+    min-height: 300px;
+    object-fit: contain;
+}
+
+    .imagePanelLeft::after, .imagePanelRight::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .imagePanelLeft img, .imagePanelRight img {
+        max-width: 400px;
+        display: inline-block;
+    }
+
+    .imagePanelLeft p, .imagePanelRight p {
+        padding: 15px;
+        text-align: left;
+        font-size: 150%;
+    }
+
+    .imagePanelLeft img {
+        float: left;
+    }
+
+    .imagePanelRight {
+        float: right;
+    }
+    
+
 
