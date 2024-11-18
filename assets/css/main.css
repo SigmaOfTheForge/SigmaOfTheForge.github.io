@@ -224,8 +224,7 @@ body
 /* Image panel- Left and Right*/
 .imagePanelLeft, .imagePanelRight {
     min-height: 300px;
-    object-fit: contain;
-    margin: 0 25%;
+    margin: 0 5%;
 }
 
     .imagePanelLeft::after, .imagePanelRight::after {
@@ -236,6 +235,8 @@ body
 
     .imagePanelLeft img, .imagePanelRight img {
         max-width: 400px;
+        max-height: 400px;
+        object-fit: contain;
         display: inline-block;
     }
 
@@ -249,7 +250,7 @@ body
         float: left;
     }
 
-    .imagePanelRight {
+    .imagePanelRight img{
         float: right;
     }
     
