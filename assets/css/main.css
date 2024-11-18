@@ -202,9 +202,10 @@ body
 
 .centralText {
     padding: 40px;
-    text-align:center;
+    text-align: center;
     font-size: 150%;
     max-width: 400px;
+    margin: 0px auto;
 }
 
 /* Project Header */
