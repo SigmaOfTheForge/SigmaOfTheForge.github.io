@@ -31,6 +31,7 @@ body
     background-position: center;
     object-fit: cover;
     object-position:center;
+    background-size: cover;
 
     padding: 40px;
 }
@@ -197,4 +198,12 @@ body
       line-height:4px;
     }
 
+
+.projectTitle {
+    background-color:lightgray;
+}
+
+.projectTitle p{
+    max-width: 700px;
+}
 
