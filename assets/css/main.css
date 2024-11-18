@@ -225,6 +225,7 @@ body
 .imagePanelLeft, .imagePanelRight {
     min-height: 300px;
     object-fit: contain;
+    margin: 0 25%;
 }
 
     .imagePanelLeft::after, .imagePanelRight::after {
@@ -239,7 +240,7 @@ body
     }
 
     .imagePanelLeft p, .imagePanelRight p {
-        padding: 15px;
+        margin: 15px;
         text-align: left;
         font-size: 150%;
     }
