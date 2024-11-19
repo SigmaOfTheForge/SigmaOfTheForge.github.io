@@ -175,6 +175,7 @@ body
 
 .centralGallery-content {
     display: block;
+    max-width: 605px;
     margin: 10px;
     margin-bottom: 20px;
     float: left;
@@ -197,11 +198,11 @@ body
     }
 
     .centralGallery-desc h3{
-        line-height: 4px;
+        
     }
 
     .centralGallery-desc p{
-      line-height:4px;
+      
     }
 
 .centralText {
