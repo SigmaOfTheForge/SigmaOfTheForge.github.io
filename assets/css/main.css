@@ -142,7 +142,8 @@ body
 /* Video*/
 .centralVideo{
     margin: 10px;
-    
+    display:block;
+    width: 100%
 }
 
 .centralVideo iframe{
