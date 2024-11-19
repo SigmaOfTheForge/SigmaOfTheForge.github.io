@@ -177,7 +177,7 @@ body
 
 .centralGallery-content {
     display: block;
-    max-width: 305px;
+    max-width: 500px;
     margin: 10px;
     margin-bottom: 20px;
     float: left;
@@ -188,7 +188,7 @@ body
 }
         .centralGallery-content img {
             object-fit: contain;
-            max-width:300px;
+            max-width:450px;
             
         }
 
@@ -197,6 +197,8 @@ body
         text-align:center;
         overflow-wrap:normal;
         max-width: 615px;
+        margin-bottom:20px;
+
     }
 
     .centralGallery-desc h3{
