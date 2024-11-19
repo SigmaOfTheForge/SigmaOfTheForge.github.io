@@ -246,8 +246,8 @@ body
 
 /* Image panel- Left and Right*/
 .imagePanelLeft, .imagePanelRight {
-    min-height: 300px;
-    margin: 0 10%;
+    
+    margin: 0 15%;
 }
 
     .imagePanelLeft::after, .imagePanelRight::after {
