@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<head>
+    <title>Jade Friend Portfolio | Games</title>
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+</head>
+
+
+<html>
+<body>
+    <!-- Top page header and menu-->
+    <div class="header">
+        <h1>Jade Friend</h1>
+        <h3>Sigma-Phoenix Productions</h3>
+    </div>
+
+    <div class="topnav">
+        <div class=" topnav-centered">
+            <a href="../../index.html">Home</a>
+        </div>
+
+        <a class="topnavSelected" href="../games.html">Games</a>
+        <a href="#">3D art and Animation</a>
+        <a href="#">Photography</a>
+
+
+        <div class="topnav-right">
+            <a href="#">Blog</a>
+        </div>
+    </div>
+    <!-- Project Page -->
+    <div class="projectTitle">
+        <h1>
+            Super Star-ogon
+        </h1>
+        <p>
+            Pure C++ and Direct X 11 project i worked on for the 2023-24 Grads in Games Rising Star Game Jam.
+            Developed over the course of 3 months from November 2023 to January  2024
+        </p>
+
+    </div>
+
+    <div class="centralText">
+        <p>
+            This game was an interesting experimentation and dive into the Direct X frameworks, while i have never experimented with the libraries before,
+            being thrown into the deep-end for this game project was fun and an incredibly valuable learning experience.
+            The Grads in Games brief for programming required using a rotation-lock puzzle C++ game as a base and expanding upon its frameworks and
+            libraries to create a more fleshed out and playable game.
+        </p>
+    </div>
+
+    <div class="imagePanelLeft">
+        <img src="../../assets/images/games/FinCut-1.png" />
+        <p>
+            The game takes inspiration from the massively popular game "Super Hexagon",
+            mostly due to my limitations and unfamiliarity with Direct X and its rendering systems.
+        </p>
+    </div>
+    <div class="imagePanelRight">
+        <img src="../../assets/images/games/FinCut-2.png" />
+        <p>
+            The game plays by using a controller to move the player around in a circle, dodging expanding rings for 10 consecutive turns.
+        </p>
+    </div>
+    <div class="imagePanelLeft">
+        <img src="../../assets/images/games/FinCut-3.png" />
+        <p>
+            This project had numerous hours dedicated to debugging,
+            the most hours i have spent on debuggin my game were in relation to an issue with the rotations,
+            where the player would be detected to lose even if they were visibly clearly inside the boundaries.
+            <br />
+            I later found that at the end of the debugging process that the player was rotating into negative numbers while the rings were always positive,
+            a simple fix that looped from 0 to 2 Pi which did not affect the gameplay or visuals of the game.
+        </p>
+    </div>
+
+    <div class="centralVideo">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/ZG5zF26MEE8" title="Super Star-ogon | Grads in Games 2023-24 SFAS/RS Game Jam Submission| Jade Friend" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+
+    <div  class="centralButton">
+        <a target="_blank" href="https://sigmaoftheforge.itch.io/super-star-ogon">Play Now on Itch.io</a>
+    </div>
+
+
+
+</body>
+</html>
