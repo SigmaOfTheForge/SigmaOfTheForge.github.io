@@ -39,19 +39,47 @@
     </div>
 
     <div class="centralText">
-        <p>The game is a 2D Platformer/exploration game, where the player must use a grapple hook and simple movement mechanics to explore and repair a spaceship containing a colony of people.</p>
+        <p>
+            The game is a 2D Platformer/exploration game, where the player must use a grapple hook and simple movement mechanics to explore
+            and repair a spaceship containing a colony of people.
+        </p>
     </div>
 
     <div class="imagePanelLeft">
-        <img src="../../assets/images/Headshot.jpg" />
-        <p>Due to the mix of skills involved in the group project, the style is a blend of 2D pixel art and 3D low poly, all passed through a compression shader to stylise the world and fit together.</p>
+        <img src="../../assets/images/games/RennRif-Gameplay1.png" />
+        <p>
+            Due to the mix of skills involved in the group project, the style is a blend of 2D pixel art and 3D low poly,
+            all passed through a compression shader to stylise the world and fit together.
+        </p>
     </div>
     <div class="imagePanelRight">
-        <img src="../../assets/images/Headshot.jpg" />
+        <img src="../../assets/images/games/RennRif-Gameplay2.png" />
         <p>
-            As a large group project, i was assigned to work on the key systems of Checkpoints, save and loading and a small shadergraph system that would provide a pixellated artstyle to 3D assets.
+            As a large group project, i was assigned to work on the key systems of Checkpoints,
+            save and loading and a small shadergraph system that would provide a pixellated artstyle to 3D assets.
             <br />
             I also produced the grapple hook mechanic, being mindful of others and making my code maintainable and able to be implimented by almost anyone
+        </p>
+    </div>
+    <div class="imagePanelLeft">
+        <img src="../../assets/images/games/RennRif-Gameplay3.png"/>
+        <p>
+
+            When working on the game, i was under a lot of stress to get the shader working despite numerous issues with 2D sprites and the shader graph.
+            Im glad i was able to learn to a certain degree how the shader systems work in unity and to come up with creative
+            solutions to the problems i faced in only a few weeks of work.
+            <br />
+            The checkpoint system was a vital part of the game's difficulty,
+            letting the game be hard without punishing the player for slight mistakes.
+        </p>
+    </div>
+    <div class="imagePanelRight">
+        <img src="../../assets/images/games/RennRif-Gameplay4.png" />
+        <p>
+            While the shader i had developed worked on my own machine, as it had issues before submission it was disabled in the final build,
+            however i still feel proud of the methods i used to circumvent 2D sprites failing to write to the depth buffer.
+            I used an intersecting flat plane that wrote to the buffer to cut a hole in the shader,
+            and then projected what would be behind the hole onto the plane using a variant of my shader.
         </p>
     </div>
 

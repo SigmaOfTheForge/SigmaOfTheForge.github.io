@@ -210,6 +210,26 @@ body
     margin: 0px auto;
 }
 
+.centralButton {
+    margin: 30px;
+    text-align:center;
+}
+
+.centralButton a {
+    width: 40%;
+    background-color: darkslategrey;
+    padding: 6px;
+    color: whitesmoke;
+    border: 5px solid darkslategrey;
+}
+
+    .centralButton a:hover {
+        background-color: grey;
+        color: darkslategrey;
+        font-style:italic;
+        border: 5px solid darkslategrey;
+    }
+
 /* Project Header */
 .projectTitle {
     background-color: lightgray;
