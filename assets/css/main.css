@@ -172,7 +172,7 @@ body
 
 
 .centralGallery-content {
-    display: inline-block;
+    display: block;
     margin: 10px;
     margin-bottom: 20px;
     float: left;
