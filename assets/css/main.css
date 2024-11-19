@@ -189,6 +189,7 @@ body
         .centralGallery-content img {
             object-fit: contain;
             max-width:450px;
+            max-height: 200px;
             
         }
 
@@ -197,7 +198,6 @@ body
         text-align:center;
         overflow-wrap:normal;
         max-width: 615px;
-        margin-bottom:20px;
 
     }
 
