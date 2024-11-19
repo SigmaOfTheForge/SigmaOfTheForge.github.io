@@ -177,7 +177,7 @@ body
 
 .centralGallery-content {
     display: block;
-    max-width: 605px;
+    max-width: 305px;
     margin: 10px;
     margin-bottom: 20px;
     float: left;
@@ -188,8 +188,8 @@ body
 }
         .centralGallery-content img {
             object-fit: contain;
-            max-width:600px;
-            height: 200px;
+            max-width:300px;
+            
         }
 
     .centralGallery-desc {
