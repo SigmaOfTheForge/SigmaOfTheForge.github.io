@@ -142,7 +142,7 @@ body
 /* Video*/
 .centralVideo{
     margin: 10px;
-    width: 100%;
+    
 }
 
 .centralVideo iframe{
@@ -162,7 +162,7 @@ body
 
 .centralGallery {
     width: 80%;
-    margin: 0px auto;
+    margin: 10px auto;
 }
 
 .centralGallery h1 {
