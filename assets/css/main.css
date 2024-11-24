@@ -194,6 +194,7 @@ body
         }
 
     .centralGallery-desc {
+        object-position:center;
         padding: 15px;
         text-align:center;
         overflow-wrap:normal;
