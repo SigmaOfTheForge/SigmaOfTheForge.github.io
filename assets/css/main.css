@@ -197,17 +197,10 @@ body
         padding: 15px;
         text-align:center;
         overflow-wrap:normal;
-        max-width: 615px;
+        max-width: 450px;
 
     }
 
-    .centralGallery-desc h3{
-        
-    }
-
-    .centralGallery-desc p{
-      
-    }
 
 .centralText {
     padding: 40px;
