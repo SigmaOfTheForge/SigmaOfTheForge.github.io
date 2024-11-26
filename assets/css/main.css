@@ -144,14 +144,14 @@ body
 
 /* Video*/
 .centralVideo{
-    margin: 10px 30%;
+    margin: 10px;
     display:block;
+    background-color:lightgreen;
     width: 100%
 }
 
 .centralVideo iframe{
     margin-top: 20px;
-    object-position:center;
     vertical-align: middle;
     display: block;
     margin-left: auto;
