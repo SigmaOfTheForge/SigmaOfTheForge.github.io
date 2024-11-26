@@ -146,7 +146,7 @@ body
 .centralVideo{
     margin: 10px;
     display:block;
-    background-color:lightgreen;
+    
     width: 100%
 }
 
@@ -168,7 +168,7 @@ body
 .centralGallery {
     width: 80%;
     margin: 10px auto;
-    background-color: palevioletred;
+    
 }
 
 .centralGallery h1 {
