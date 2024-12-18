@@ -228,8 +228,12 @@ body
         width: 100%;
     }
 
-    .centralButton a, .wideButton a {
+    .centralButton a {
         width: 60%;
+    }
+
+    .centralButton a, .wideButton a {
+        
         background-color: darkslategrey;
         padding: 6px;
         color: whitesmoke;
