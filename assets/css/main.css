@@ -323,10 +323,12 @@ body
 
     .codePanelLeft, .codePanelLeft-code {
         float: left;
+        display:block;
     }
 
-    .codePanelRight, .codePanelRight-code{
-        float:right;
-    }
+.codePanelRight, .codePanelRight-code {
+    float: right;
+    display: block;
+}
 
 
