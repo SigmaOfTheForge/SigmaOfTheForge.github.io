@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<head>
+    <title>Jade Friend Portfolio | Games</title>
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+</head>
+
+
+<html>
+<body>
+    <!-- Top page header and menu-->
+    <div class="header">
+        <h1>Jade Friend</h1>
+        <h3>Sigma-Phoenix Productions</h3>
+    </div>
+
+    <div class="topnav">
+        <div class=" topnav-centered">
+            <a href="../../index.html">Home</a>
+        </div>
+
+        <a class="topnavSelected" href="../games.html">Games</a>
+        <a href="../art-animation.html">3D art and Animation</a>
+        <a href="../photography.html">Photography</a>
+
+
+        <div class="topnav-right">
+            <a href="#">Blog</a>
+        </div>
+    </div>
+    <!-- Project Page -->
+    <div class="projectTitle">
+        <h1>
+            Rennovator Rift - Specific Code Details
+        </h1>
+        <p>
+            Unity C# group project for Ravensbourne University consisting of an entire class of Year 2 Game developers and Programmers (46 students) from February to March 2024
+        </p>
+
+        <div class="wideButton">
+            <a href="../RennRift.html"> Return to the main game page here </a>
+        </div>
+
+    </div>
+
+    <div class="centralText">
+        <p>
+            The game is a 2D Platformer/exploration game, where the player must use a grapple hook and simple movement mechanics to explore
+            and repair a spaceship containing a colony of people.
+        </p>
+    </div>
+
+    <div class="codePanelLeft">
+        <p>
+            The fitness gram pacer test is a multi stage aerobics test 
+        </p>
+    </div>
+    <div class="codePanelRight-code">
+        <pre class="prettyprint">
+    //using late update to render the rope so that it does not lag behind the physics of the rope 
+    private void LateUpdate()
+    {
+        DrawRope();
+    }
+
+
+    private void GrappleBegin()
+    {
+        if(grappleAnchor != Vector3.zero) //if the grapple point is not "Reset"
+        {
+            //Adds a springJoint component and connects it to the desired grappleAnchor
+            joint = gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grappleAnchor;
+
+            //gets the distance between the player and the grapple-point 
+            float dist = Vector3.Distance(gameObject.transform.position, grappleAnchor);
+
+            //distance the player can vary from grapple point
+            joint.maxDistance = dist * ropeMaxScale; //smaller scale, the less it can stretch
+            joint.minDistance = dist * ropeMinScale; //smaller scale, the less it can 
+
+            //setting the Variables for rope's behaviour
+            joint.spring = ropeSpringyness;
+            joint.damper = ropeDampen;
+            joint.massScale = ropeMass;
+
+            //amount of points the line render can render too for the rope (2 points atm, can do some math for some visual bending of the rope but only 2 points minimum needed)
+            lr.positionCount = 2;
+
+            isGrappling = true;
+        }
+</pre>
+    </div>
+
+
+
+</body>
+</html>
