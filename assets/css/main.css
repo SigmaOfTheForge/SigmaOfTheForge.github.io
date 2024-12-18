@@ -219,6 +219,15 @@ body
     text-align:center;
 }
 
+.wideButton {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+    .wideButton a {
+        width: 100%;
+    }
+
     .centralButton a, .wideButton a {
         width: 60%;
         background-color: darkslategrey;
@@ -234,13 +243,7 @@ body
             border: 5px solid darkslategrey;
         }
 
-    .wideButton {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    .wideButton a {
-        width:100%;
-    }
+
 
 /* Project Header */
 .projectTitle {
