@@ -321,7 +321,9 @@ body
 
 .codePanelLeft pre , .codePanelRight pre {
     background-color: #353333;
-    width: auto;
+    margin: 10px;
+    font-size:small ;
+    width: 50%;
     text-align: left;
     border: 4px solid dimgrey;
     font-family: 'Cascadia Mono';
