@@ -311,11 +311,11 @@ body
         width:auto;
     }
 
-    .codePanelLeft p, .codePanelRight pre {
+    .codePanelLeft p{
         float:left;
     }
 
-    .codePanelRight p, .codePanelLeft pre {
+    .codePanelRight p{
         float: right;
     }
 
