@@ -47,16 +47,17 @@
 
     <div class="centralText">
         <p>
-            The game is a 2D Platformer/exploration game, where the player must use a grapple hook and simple movement mechanics to explore
-            and repair a spaceship containing a colony of people.
+            As this project was for a large group module, we had a total of 8 programmers working together to produce all the features and mechanics. 
+            While primarily i focused on developing the shadergraph i also devised one of the key mobility mechanics used in the game, the grapple hook.
         </p>
     </div>
 
-    <div class="codePanelLeft">
+    <div class="codePanel">
         <p>
-            A segment of my code for controlling grapple hooks. The player recieves the location of grapple points when they enter the radius of the point, and loses the location when they leave the point.
-            this allows the other developers i was working with to easily place objects with my devised "GrappleAnchor" script around the level and only set a few parameters, as i wanted my mechanics i made
-            to be accessible and implementable by other developers.
+            This is the primary portion for my grapple hook script. When the player enters the grapple anchor's radius it enables the use of the hook, and when the player
+            activates the hook it creates a spring joint between the player and the anchor to use the physics engine to control the movement, with the feel of the 
+            rope being dialed in using the behaviour variables. I also used a line renderer to create the hook visually and set the start and end points to the 
+            player and the anchor
         </p>
         <pre class="prettyprint">
     //using late update to render the rope so that it does not lag behind the physics of the rope 
@@ -80,7 +81,7 @@
 
             //distance the player can vary from grapple point
             joint.maxDistance = dist * ropeMaxScale; //smaller scale, the less it can stretch
-            joint.minDistance = dist * ropeMinScale; //smaller scale, the less it can 
+            joint.minDistance = dist * ropeMinScale; //smaller scale, the less it can pull you in
 
             //setting the Variables for rope's behaviour
             joint.spring = ropeSpringyness;
@@ -93,6 +94,49 @@
             isGrappling = true;
         }
 </pre>
+    </div>
+
+    <div class="codePanel">
+        <pre class="prettyprint">
+public class GrappleAnchor : MonoBehaviour
+{
+    private GameObject enteredPlayer; //ref to the player that enters the area
+    private GrappleHook hook; //ref to the GrappleHook script on the player
+
+    private void OnTriggerEnter(Collider other)
+    {
+        //if the object that entered the area is a player and there isnt already a player inside the array
+        if (other.tag == "Player" && enteredPlayer == null)
+        {
+            enteredPlayer = other.gameObject; 
+            hook = enteredPlayer.GetComponent<GrappleHook>(); 
+            //tells the player's grapple hook the location of the anchor and enables the hook
+            hook.EnterGrappleRadius(gameObject.transform.position);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //to prevent issues if theres multiple players, only the player who initially entered can trigger the exit script
+        if(other.tag == "Player" && other.gameObject == enteredPlayer) 
+        {
+            //triggers the exit function in the player's script
+            hook.ExitGrappleRadius(); 
+            //clears the references
+            hook = null;
+            enteredPlayer = null;
+        }
+    }
+
+}
+        </pre>
+
+        <p>
+            The entire script for the anchor points. This script only stores references the player when they're within the trigger,
+            sending the location of the anchor to the player so that their grapple hook script can handle the physics of the game.
+            <br /><br /> Its a simple and easy method for other developers to be able to quickly understand when it comes to building the levels.
+        </p>
+
     </div>
 
 

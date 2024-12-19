@@ -112,8 +112,10 @@ body
 .centralPanel {
     font-size: 120%;
     background-color: indianred;
-    margin: 80px;
+    margin: 80px auto;
     height: 400px;
+    max-width:80%;
+    border-radius: 5px;
 }
 
 .centralPanel::after {
@@ -144,9 +146,8 @@ body
 
 /* Video*/
 .centralVideo{
-    margin: 10px;
-    display:block;
-    
+    margin: 20px auto;
+    position:absolute;
     width: 100%
 }
 
@@ -167,41 +168,46 @@ body
 
 .centralGallery {
     width: 80%;
+    text-align: center;
     margin: 10px auto;
-    
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+
 }
 
-.centralGallery h1 {
+.centralGallery-header h1 {
     text-align:center;
     color: white;
+    display:block;
 }
 
 
 .centralGallery-content {
-    display: block;
-    max-width: 500px;
+    width: 30%;
     margin: 10px;
-    margin-bottom: 20px;
-    float: left;
+    margin-bottom: 100px;
     background-color: grey;
     padding: 5px;
     text-align: center;
+    border-radius: 10px;
     
 }
         .centralGallery-content img {
             object-fit: contain;
-            max-width:450px;
+            
             max-height: 200px;
             
         }
 
     .centralGallery-desc {
+        display:block;
         object-position:center;
         padding: 15px;
         text-align:center;
         overflow-wrap:normal;
-        max-width: 300px;
-
+        
+        margin: 0px auto;
     }
 
 
@@ -221,7 +227,7 @@ body
 
 .wideButton {
     text-align: center;
-    margin-bottom: 10px;
+    margin: 10px 0px;
     width:100%;
 }
 
@@ -298,33 +304,29 @@ body
     }
     
     /* Code Panels for explaination pages*/
-.codePanelLeft, .codePanelRight {
-    margin: 0 10%;
+.codePanel{
+    margin: 0 05%;
     width:auto;
+    display:flex;
+    justify-content: center;
 }
 
-    .codePanelLeft p, .codePanelRight p {
+
+    .codePanel p {
         
         text-align: left;
         font-size: 150%;
         padding: 20px;
-        width:40%;
+        width:30%;
     }
 
-    .codePanelLeft p, .codePanelRight pre{
-        float:left;
-    }
-
-    .codePanelRight p, .codePanelLeft pre{
-        float: right;
-    }
-
-.codePanelLeft pre , .codePanelRight pre {
+.codePanel pre {
     background-color: #353333;
     padding-top: 3px;
     font-size:small ;
-    width: 50%;
-   
+    padding: 10px;
+    width: 60%;
+   border-radius: 6px;
     text-align: left;
     border: 4px solid dimgrey;
     font-family: 'Cascadia Mono';
