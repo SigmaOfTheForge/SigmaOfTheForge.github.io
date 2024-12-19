@@ -311,11 +311,11 @@ body
         width:40%;
     }
 
-    .codePanelLeft p{
+    .codePanelLeft p, .codePanelRight pre{
         float:left;
     }
 
-    .codePanelRight p{
+    .codePanelRight p, .codePanelLeft pre{
         float: right;
     }
 
@@ -324,6 +324,7 @@ body
     padding-top: 3px;
     font-size:small ;
     width: 40%;
+   
     text-align: left;
     border: 4px solid dimgrey;
     font-family: 'Cascadia Mono';
