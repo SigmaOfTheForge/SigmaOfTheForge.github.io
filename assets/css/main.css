@@ -299,7 +299,7 @@ body
     
     /* Code Panels for explaination pages*/
 .codePanelLeft, .codePanelRight {
-    margin: 0 5%;
+    margin: 0 10%;
     width:auto;
 }
 
