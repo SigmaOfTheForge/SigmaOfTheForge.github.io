@@ -139,7 +139,128 @@ public class GrappleAnchor : MonoBehaviour
 
     </div>
 
+    <div class="codePanel">
 
+        <p>
+            For this project i was also responsible for creating a checkpoint and saving system for the game, so that players could keep their progress when they die or close the game
+            <br /><br />
+            This was the first time i had experimented with saving systems, so for the most part i focused on saving essential data as a class in a text document. <br />
+            The class contains the index number for the last checkpoint they were at, whether this is a fresh save-file and the amount of health the player has. 
+            <br /><br />
+            When the level is loaded, the SaveManager checks whether it is loading a new save file or a pre-existing one and spawns the player at the corresponding checkpoint/spawnpoint
+            and the player's data is saved every time they pass a new checkpoint to keep up with their progress. Whenever the player dies they are also respawned at the same checkpoint they would when
+            the game is launched based on their save-file.
+        </p>
+
+        <pre class="prettyprint">
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayerSettings 
+{
+    public int lastSavedPosition; //index of the last checkpoint the player hit
+    public int playerHealth; 
+    public bool isNewGame = true; //initialised to true so that fresh saveData is always considered a new game.
+}
+
+public class SaveManager : MonoBehaviour
+{
+    [SerializeField]
+    private GameObject[] checkPoints; //list of checkpoints in the scene
+
+    private GameObject 
+        player, //reference to the player
+        startPos; //first child of GameManager, where the player spawns when they have no save data/saved checkpoints
+
+    private PlayerSettings saveData = new PlayerSettings(); //creates a saveData type initialised to default settings
+
+    private int currentCheckPoint; //current checkPoint the player is at in the level
+
+    void Awake()
+    {
+        startPos = gameObject.transform.GetChild(0).gameObject; //gets the startPos from child
+        player = GameObject.FindGameObjectWithTag("Player"); //gets a reference to the player in the scene 
+        LoadFromJson(); //runs the load function to check if there is save data and to set the player's position
+    }
+
+    private void Update()
+    {
+        //if the player wants to load the save
+        if (Input.GetKeyDown(KeyCode.L)) 
+        {
+            //reload the scene to re-run the "loadFromJson()" in awake
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+        }
+
+        /if the player wants to clear a save
+        if (Input.GetKeyDown(KeyCode.C)) /
+        {
+            //Creates a new PlayerSettings & Overwrites pre-existing save with new one
+            saveData = new PlayerSettings();
+            SaveToJson();
+        }
+    }
+
+    //Saves the game data to a .json file
+    private void SaveToJson() 
+    {
+        //converts the saveData to a .json formatted string and saves it to the desired path
+        string savDat = JsonUtility.ToJson(saveData); 
+        string filePath = Application.persistentDataPath + "/PlayerData.json"; 
+        Debug.Log(filePath);
+        System.IO.File.WriteAllText(filePath, savDat); //writes the data to the file
+    }
+
+    private void LoadFromJson() 
+    {
+        //locates the filepath of the saveData and saves it to a temporary string variable
+        string filepath = Application.persistentDataPath + "/PlayerData.json";   
+        string savDat = System.IO.File.ReadAllText(filepath); 
+
+        if(JsonUtility.FromJson<PlayerSettings>(savDat) != null) 
+        {
+            //converts from .json to PlayerSettings class and saves in in the saveData
+            saveData = JsonUtility.FromJson<PlayerSettings>(savDat); 
+            //checks if the loading save is from a new game
+            if (!saveData.isNewGame)
+            {
+                //sets the players position to the last checkpoint
+                player.transform.position = checkPoints[saveData.lastSavedPosition].transform.position;  
+            }
+            else 
+            {
+                //sends player to the start position
+                player.transform.position = startPos.transform.position;
+            }
+        }
+        else //if no saveData could be found, treats the game as loading from a fresh save
+        {
+            player.transform.position = startPos.transform.position;
+        }
+    }
+
+    public void HitCheckPoint(GameObject checkPoint) 
+    {
+        //compares index of checkpoints against the checkpoint the player hit
+        for(int i = 0; i < checkPoints.Length; i++) 
+        {
+            if (checkPoints[i].gameObject == checkPoint)
+            {
+                //sets the file's index number to the checkpoint the player hit 
+                saveData.lastSavedPosition = i; 
+                saveData.isNewGame = false;
+                //saves the game
+                SaveToJson();
+            }
+        }
+    }
+}
+        </pre>
+
+    </div>
 
 
 </body>
