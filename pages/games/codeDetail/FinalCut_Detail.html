@@ -229,5 +229,208 @@ void UCPP_InteractionComponent::Interact(AActor* OtherActor)
 
 	</div>
     <!-- Collectibles, Light switch and Fusebox -->
+	<div class="centralText">
+		<p>
+			What justified the use of my interaction component was my need for puzzle elements. Most simple horror games will have a "collct [object/s] to open a door" and so i wanted to add those and a few 
+			of those elements to my game along with a light switch, being able to focus on individual functionality for these and use my interaction script to enable their functionality made it a lot easier
+			to develop.
+		</p>
+	</div>
+
+	<div class="codePanel">
+		<p>
+			The light switch i wanted to make was designed so that i could add as many lights as needed, keeping a TArray of lights that i could expand as needed that, when triggered, will cycle through and active/
+			deactivate all the lights. 
+		</p>
+		<pre class="prettyprint">
+#include "CPP_LightSwitch.h"
+
+// Sets default values
+ACPP_LightSwitch::ACPP_LightSwitch()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	lightSwitchOnMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("lightBoxOnMesh"));
+	RootComponent = lightSwitchOnMesh;
+	lightSwitchOffMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("lightBoxOffMesh"));
+	lightSwitchOffMesh->SetupAttachment(lightSwitchOnMesh);
+
+	lightSwitchOnMesh->ToggleVisibility();
+
+}
+
+// Called when the game starts or when spawned
+void ACPP_LightSwitch::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	lights.Init({}, lightObjects.Num());
+
+	for (int i = 0; i < lightObjects.Num(); i++)
+	{
+		lights[i] = lightObjects[i]->GetComponentByClass<URectLightComponent>();
+
+		lights[i]->ToggleVisibility();
+
+	}
+}
+
+// Called every frame
+void ACPP_LightSwitch::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void ACPP_LightSwitch::Toggle()
+{
+	lightSwitchOnMesh->ToggleVisibility();
+	lightSwitchOffMesh->ToggleVisibility();
+
+	for (int i = 0; i < lightObjects.Num(); i++)
+	{
+		lights[i]->ToggleVisibility();
+	}
+}
+</pre>
+
+	</div>
+
+	<div class="centralText">
+		<p>
+			For the Fuses and Fusebox, they reference a very simple inventory component in the player to handle the inventory. The fusebox also includes a similar feature to the lightswitch,
+			but also requires the player to have the correct amount of fuses before activating, also having fuse objects that appear inside the box as if the player is placing them inside.
+		</p>
+	</div>
+
+	<div class="codePanel">
+		<pre class="prettyprint" style="width:45%">
+#include "CPP_PickUpFuse.h"
+
+#include "CPP_PlayerInventory.h"
+
+// Sets default values
+ACPP_PickUpFuse::ACPP_PickUpFuse()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	fuseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("fuseMesh"));
+	RootComponent = fuseMesh;
+
+}
+
+void ACPP_PickUpFuse::PickUp(AActor* actor)
+{
+	//incriments the player's inventory for this item by 1
+	actor->GetComponentByClass<UCPP_PlayerInventory>()->AddToInventory(1);
+	Destroy();
+}
+
+// Called when the game starts or when spawned
+void ACPP_PickUpFuse::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+	
+}
+
+// Called every frame
+void ACPP_PickUpFuse::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+		</pre>
+		<pre class="prettyprint" style="width:45%">
+#include "CPP_FuseBox.h"
+#include "CPP_PlayerInventory.h"
+#include "Kismet/GameplayStatics.h"
+
+// Sets default values
+ACPP_FuseBox::ACPP_FuseBox()
+{
+ 	// Set this actor to call Tick() every frame.
+	PrimaryActorTick.bCanEverTick = true;
+
+	generatorMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("generatorMesh"));
+	RootComponent = generatorMesh;
+
+	fuseMesh1 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("fuseMesh1"));
+	fuseMesh1->SetupAttachment(RootComponent);
+
+	fuseMesh2 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("fuseMesh2"));
+	fuseMesh2->SetupAttachment(RootComponent);
+
+	fuseMesh3 = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("fuseMesh3"));
+	fuseMesh3->SetupAttachment(RootComponent);
+
+}
+
+// Called when the game starts or when spawned
+void ACPP_FuseBox::BeginPlay()
+{
+	Super::BeginPlay();
+
+	generatorLights.Init({}, generatorLightObjects.Num());
+
+	fuseMesh1->ToggleVisibility();
+	fuseMesh2->ToggleVisibility();
+	fuseMesh3->ToggleVisibility();
+
+	for (int i = 0; i < generatorLightObjects.Num(); i++)
+	{
+		generatorLights[i] = generatorLightObjects[i]->GetComponentByClass<URectLightComponent>();
+
+		generatorLights[i]->ToggleVisibility();
+
+	}
+	
+}
+
+// Called every frame
+void ACPP_FuseBox::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void ACPP_FuseBox::GeneratorInteract(AActor* playerActor)
+{
+	UCPP_PlayerInventory* playerInv = playerActor->GetComponentByClass<UCPP_PlayerInventory>();
+
+	int playerFuseCount = playerInv->fuseAmount;
+
+	if (playerFuseCount >= fuseRequirement)
+	{
+		fuseMesh1->ToggleVisibility();
+		fuseMesh2->ToggleVisibility();
+		fuseMesh3->ToggleVisibility();
+
+		playerInv->RemoveFromInventory(fuseRequirement);
+
+		UGameplayStatics::PlaySoundAtLocation(
+			this, fuseBoxSound, 
+			this->GetActorLocation(),
+			1.0f, 1.0f, 0.0f,
+			fuseBoxAttenuation);
+
+		OnFuseBoxCompleted.Broadcast(TEXT("CalledTheFunction"));
+
+		for (int i = 0; i < generatorLightObjects.Num(); i++)
+		{
+			generatorLights[i]->ToggleVisibility();
+
+		}
+	}
+	
+
+}
+		</pre>
+
+	</div>
+
 </body>
 </html>
