@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<head>
+    <title>Jade Friend Portfolio | Games</title>
+    <link rel="stylesheet" href="../../../assets/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=desert"></script>
+</head>
+
+
+<html>
+<body>
+    <!-- Top page header and menu-->
+    <div class="header">
+        <h1>Jade Friend</h1>
+        <h3>Sigma-Phoenix Productions</h3>
+    </div>
+
+    <div class="topnav">
+        <div class=" topnav-centered">
+            <a href="../../../index.html">Home</a>
+        </div>
+
+        <a class="topnavSelected" href="../../games.html">Games</a>
+        <a href="../../art-animation.html">3D art and Animation</a>
+        <a href="../../photography.html">Photography</a>
+
+
+        <div class="topnav-right">
+            <a href="#">Blog</a>
+        </div>
+    </div>
+    <!-- Project Page -->
+    <div class="projectTitle">
+        <h1>
+            Final Cut
+        </h1>
+        <p>
+            Unreal 5.2 C++ & Blueprints project for Ravensbourne University of London Work Based Learning module and the 2024 Panic horror Jam
+        </p>
+
+
+    </div>
+
+    <div class="wideButton">
+        <a href="../FinalCut.html"> Return to the main game page here </a>
+    </div>
+
+
+    <div class="centralText">
+        <p>
+            As this was my first main project for C++ in the Unreal engine, i wanted to learn how i could make interactions between objects, and i spent a lot of time creating the
+            Pick-up flash light mechanic and an object interaction component that could be added to any object to make it interactable with by the player.
+        </p>
+    </div>
+
+    <!-- Flashlight -->
+    <div class="codePanel">
+        <p>
+			For the flashlight, as i wanted to learn how the engine worked i largely based the code off of the First Person Shooter template's rifle that can be picked up.
+			I had a lot of issues with the code as i was mostly breaking it down to guess how it worked, but i was able to create a functioning flashlight that the player could pick up 
+			and use effectively.
+        </p>
+
+        <pre class="prettyprint">
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "CPP_Flashlight.h"
+#include "EditorDemoCharacter.h"
+#include "GameFramework/PlayerController.h"
+#include "Camera/PlayerCameraManager.h"
+#include "Kismet/GameplayStatics.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+
+
+// Sets default values
+ACPP_Flashlight::ACPP_Flashlight()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	flashlightMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("FlashLightMesh"));
+	RootComponent = flashlightMesh;
+
+	flashLightSource = CreateDefaultSubobject<USpotLightComponent>(TEXT("FlashLightSource"));
+	flashLightSource->SetupAttachment(flashlightMesh);
+
+	timeBetweenCalls = 0.1;
+
+}
+
+void ACPP_Flashlight::Tick(float DeltaTime)
+{
+	timer += DeltaTime;
+	UE_LOG(LogTemp, Warning, TEXT("Timer is %d"), timer);
+}
+
+
+void ACPP_Flashlight::AttachWeapon(AEditorDemoCharacter* TargetCharacter)
+{
+	Character = TargetCharacter;
+	if (Character == nullptr)
+	{
+		return;
+	}
+
+	// Attach the weapon to the First Person Character
+	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, true);
+	AttachToComponent(Character->GetMesh1P(), AttachmentRules, FName(TEXT("GripPoint")));
+
+	// switch bHasRifle so the animation blueprint can switch to another animation set
+	Character->SetHasRifle(true);
+
+	// Set up action bindings
+	if (APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			// Set the priority of the mapping to 1, so that it overrides the Jump action with the Fire action when using touch input
+			Subsystem->AddMappingContext(FireMappingContext, 1);
+		}
+
+		if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
+		{
+			// Fire
+			EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &ACPP_Flashlight::Fire);
+		}
+	}
+}
+
+
+void ACPP_Flashlight::Fire()
+{
+	//timer created to counteract double-firing issue, when called increases "timer" so that it only triggers on the 2nd call when double-called
+	timer += 0.1;
+	if (timer > timeBetweenCalls)
+	{
+		if (flashLightSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, flashLightSound, this->GetActorLocation());
+		}
+
+		flashLightSource->ToggleVisibility();
+		timer = 0;
+	}
+	else
+	{
+		return;
+	}
+
+}
+
+void ACPP_Flashlight::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	if (Character == nullptr)
+	{
+		return;
+	}
+	//if the player ref is stored when the game ends, undoes the mapping contexts it set
+	if (APlayerController* PlayerController = Cast<APlayerController>(Character->GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			Subsystem->RemoveMappingContext(FireMappingContext);
+		}
+	}
+}
+
+
+</pre>
+
+    </div>
+    <!-- Interactable Component -->
+	<div class="codePanel">
+		<pre class="prettyprint">
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "CPP_InteractionComponent.h"
+
+UCPP_InteractionComponent::UCPP_InteractionComponent()
+{
+
+}
+
+void UCPP_InteractionComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+	OnComponentBeginOverlap.AddDynamic(this, &UCPP_InteractionComponent::OnSphereBeginOverlap);
+
+}
+
+
+void UCPP_InteractionComponent::OnSphereBeginOverlap
+(
+UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+ UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult
+)
+{
+	
+	// Checking if it is a First Person Character overlapping
+	AEditorDemoCharacter* Character = Cast<AEditorDemoCharacter>(OtherActor);
+	if (Character != nullptr)
+	{
+		OnPlayerEnter.Broadcast(Character);
+	}
+	
+}
+
+void UCPP_InteractionComponent::Interact(AActor* OtherActor)
+{
+	AEditorDemoCharacter* Character = Cast<AEditorDemoCharacter>(OtherActor);
+	if (Character != nullptr)
+	{
+		OnPlayerEnter.Broadcast(Character);
+	}
+}
+</pre>
+	
+		<p>
+			While an incredibly simple script, this script allows for a brief interaction through blueprints by connecting the player and the desired scripts with this script. 
+			The basis of this script was to be added to any object that had a basic single function, such as picking up an item to add to the inventory of the player or interacting
+			with a box to use up items in the inventory.
+			It was a useful script that allowed me to think a bit more freely when implimenting, as i could this script as a basis for other simple objects i was creating and it sped up my development
+			as i didnt have to add these interactions to every single script and could just add the component to the object i wanted to have the player interact with.
+		</p>
+
+	</div>
+    <!-- Collectibles, Light switch and Fusebox -->
+</body>
+</html>

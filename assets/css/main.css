@@ -191,11 +191,12 @@ body
     padding: 5px;
     text-align: center;
     border-radius: 10px;
+    object-fit:contain;
     
 }
         .centralGallery-content img {
-            object-fit: contain;
-            
+            object-fit:contain;
+            max-width:inherit;
             max-height: 200px;
             
         }
