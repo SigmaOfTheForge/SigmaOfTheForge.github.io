@@ -37,12 +37,103 @@
         </p>
     </div>
 
+
+
     <div class="centralVideo">
         <iframe width="560" height="315" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         <h2> Weapon's Showcase</h2>
     </div>
 
     <!-- Fire spreading -->
+    <div class="centralText"> <h3> Fire Spreading </h3></div>
+    <div class="codePanel">
+
+        <p>
+            All objects in the game contain the capacity to be set on fire as it is based within the health component. Using a subclass of the DamageType class (DamageType_Heat), i can identify incoming
+            damage as heat damage and treat it differently, adding to a stored value that when it reaches its maximum will enable the fire spreading.
+            <br /><br />
+            While on fire, objects will send heat-type damage to objects around them every frame for the duration of their burn-time, allowing the fire to spread to other objects through the same
+            health component that allowed it to be set on fire.
+        </p>
+
+        <pre class="prettyprint">
+void UHealthComponent::OnFire()
+{
+
+
+	//get all objects current object is touching
+	//apply damage (heat)
+	TArray<AActor*> result;
+
+	AActor* owner = this->GetOwner();
+
+	owner->GetOverlappingActors(result);
+
+
+	UE_LOG(LogTemp, Warning, TEXT("Overlapping Objects: %i"), result.Num() );
+	
+
+	for (int i = 0; i < result.Num(); i++)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Applying heat to %s"), *result[i]->GetName());
+		UGameplayStatics::ApplyDamage(result[i], burnDamage, owner->GetInstigatorController(), owner, UDamageType_Heat::StaticClass());
+	}
+
+
+}
+
+void UHealthComponent::FireEnd()
+{
+	fireComponent->Complete();
+	toonTanksGameMode->ActorDied(GetOwner());
+}
+
+void UHealthComponent::DamageTaken(
+            AActor* DamagedActor, float Damage, const UDamageType* DamageType,
+            class AController* Instigator, AActor* DamageCauser
+            )
+{
+	if (Damage <= 0.f || bFireTick) return;
+	
+	if (Cast<UDamageType_Heat>(DamageType))
+	{
+		currentHeat += Damage;
+
+		float percentage = currentHeat / heatThreshold;
+		
+		percentage = FMath::Clamp(percentage, 0.f, 1.f);
+
+
+		heatMaterialInstance->SetScalarParameterValue(FName(TEXT("fVisibility")), percentage);
+
+		if (currentHeat >= heatThreshold && !bFireTick)
+		{
+			bFireTick = true;
+			//start timer
+			fireComponent = UGameplayStatics::SpawnEmitterAtLocation(
+                this, fireEffect, GetOwner()->GetActorLocation(),
+                GetOwner()->GetActorRotation()
+            );
+
+			FTimerHandle fireTimerHandle;
+			FTimerDelegate fireTimerDelegate = FTimerDelegate::CreateUObject(this, &UHealthComponent::FireEnd);
+
+			GetWorld()->GetTimerManager().SetTimer(fireTimerHandle, fireTimerDelegate, burnTime, false);
+
+		}
+		return;
+	}
+
+	currentHP -= Damage;
+	if (currentHP <= 0.f && toonTanksGameMode)
+	{
+		toonTanksGameMode->ActorDied(DamagedActor);
+	}
+}
+</pre>
+
+    </div>
+
     <!-- Laser Beam -->
     <!-- Ammunition Types-->
 </body>
