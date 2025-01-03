@@ -40,7 +40,7 @@
 
 
     <div class="centralVideo">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe width="1120" height="630" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         <h2> Weapon's Showcase</h2>
     </div>
 
@@ -49,7 +49,7 @@
     <div class="codePanel">
 
         <p>
-            All objects in the game contain the capacity to be set on fire as it is based within the health component. Using a subclass of the DamageType class (DamageType_Heat), i can identify incoming
+            All objects in the game contain the capacity to be set on fire as it is based within the health component. Using a subclass of the DamageType class (UDamageType_Heat), i can identify incoming
             damage as heat damage and treat it differently, adding to a stored value that when it reaches its maximum will enable the fire spreading.
             <br /><br />
             While on fire, objects will send heat-type damage to objects around them every frame for the duration of their burn-time, allowing the fire to spread to other objects through the same
@@ -135,6 +135,285 @@ void UHealthComponent::DamageTaken(
     </div>
 
     <!-- Laser Beam -->
+
+	<div class="centralText">
+		<h3> Laser System </h3>
+	</div>
+
+    <div class="codePanel">
+        <pre class="prettyprint">
+void UCPP_LaserSystem::BeginPlay()
+{
+	Super::BeginPlay();
+
+	beamArray.Init({}, beamCount);
+	beamTick = false;
+}
+
+// Called every frame
+void UCPP_LaserSystem::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	CalculateBeam();
+}
+
+void UCPP_LaserSystem::BeamStart( USceneComponent* spawnObject)
+{
+	FRotator rotation = FRotator::ZeroRotator;
+	FName attachName;
+
+	beamSpawnObject = spawnObject;
+
+	for (int i = 0; i < beamCount; i++)
+	{
+		beamArray[i] = UNiagaraFunctionLibrary::SpawnSystemAttached(
+			laserEffect, spawnObject, attachName , 
+			beamSpawnPosition, rotation, EAttachLocation::SnapToTarget, false,
+			 true, ENCPoolMethod::None, true);
+	}
+	beamTick = true;
+}
+
+void UCPP_LaserSystem::BeamEnd()
+{
+	for (int i = 0; i < beamCount; i++)
+	{
+		beamArray[i]->Deactivate();
+
+	}
+	beamTick = false;
+}
+
+void UCPP_LaserSystem::CalculateBeam()
+{
+	if (!beamTick )
+	{
+		return;
+	}
+	beamSpawnPosition = beamSpawnObject->GetComponentLocation();
+	beamSpawnVector = beamSpawnObject->GetForwardVector();
+
+	bool bHit;
+	FVector location = beamSpawnPosition;
+	FVector normal = beamSpawnVector;
+
+	FHitResult hitResult;
+	//for beamCount
+	for (int i = 0; i < beamCount; i++)
+	{
+
+		beamArray[i]->SetNiagaraVariableFloat("BeamSpawnProb", 1);
+		beamArray[i]->SetNiagaraVariableVec3("BeamStart", location);
+
+		bHit = GetWorld()->LineTraceSingleByChannel(
+			hitResult, location, (normal * beamLength) + location,
+			ECollisionChannel::ECC_Visibility);
+
+		if (!bHit)
+		{
+			
+			for (int j = i + 1; j < beamArray.Num(); j++)
+			{
+				beamArray[j]->SetNiagaraVariableFloat("BeamSpawnProb", 0);
+			}
+			beamArray[i]->SetNiagaraVariableVec3("BeamEnd", (normal * beamLength) + location);
+
+			break;
+		}
+		else if (!hitResult.GetActor()->GetComponentByClass<UCPP_ReflectionComponent>())
+		{
+			for (int j = i + 1; j < beamArray.Num(); j++)
+			{
+				beamArray[j]->SetNiagaraVariableFloat("BeamSpawnProb", 0);
+			}
+			location = hitResult.Location + (normal * 2.f);
+			beamArray[i]->SetNiagaraVariableVec3("Normal", hitResult.ImpactNormal);
+			beamArray[i]->SetNiagaraVariableVec3("BeamEnd", location);
+
+			UGameplayStatics::ApplyDamage(
+			hitResult.GetActor(), beamDamage,
+			this->GetOwner()->GetInstigatorController(), this->GetOwner(), heatDamageType);
+
+			break;
+		}
+
+		normal = FMath::GetReflectionVector(normal, hitResult.ImpactNormal);
+		location = hitResult.Location + (normal * 2.f);
+		beamArray[i]->SetNiagaraVariableVec3("Normal", hitResult.ImpactNormal);
+		beamArray[i]->SetNiagaraVariableVec3("BeamEnd", location);
+
+		UGameplayStatics::ApplyDamage(
+			hitResult.GetActor(), beamDamage,
+			this->GetOwner()->GetInstigatorController(), this->GetOwner(), heatDamageType);
+
+	}
+}
+
+</pre>
+        <p>
+			i adapted my laser script from
+			<a target="_blank" href="https://www.youtube.com/watch?v=sjUtDBp15l8"> this laser reflection tutorial </a>
+			which was designed for first-person gameplay and didnt contain an implimentation to select what reflects and 
+			apply damage. My laser script checks if the object it has hit contains a simple (mostly blank) component, and then 
+			it will process the next beam of the laser and repeat until it goes through the maximum beamcount initialised at the 
+			start of the level.
+			<br /><br />
+			To apply damage, i take advantage of the health component and the ApplyDamage function in Gameplay Statics to apply a subclass
+			of the UDamageType component that will be processed differently when it reaches the object it is hitting, setting the object on fire instead
+			of applying direct damage to the object's HP.
+        </p>
+
+    </div>
     <!-- Ammunition Types-->
+	<div class="centralText">
+		<h2> Ammunition Types & Weapon Switching </h2>
+        <p>
+            For the other variations of ammunition that the player can use (Basic, Bounce and Piercing), they inherit from a single projectile that contains the base functions for explosions,
+            knockback and the ProjectileMovementComponent. Thanks to this inheritence, the types of ammunition can be stored as Subclasses of the primary class and easily switched out in the
+            firing mechanic which can spawn any subclass of the initial firing mechanic
+        </p>
+		<h3> Base Projectile </h3>
+	</div>
+
+	<div class="codePanel">
+		<p>
+			The base projectile contains the main function for producing explosion which applies radial damage and sweeps nearby physics objects to do a radial impulse for 
+			knockback damage. Its a relatively simple script but it contains everything i'll need for building on it with my other projectile types.
+			<br /><br />
+			Originally this projectile called Destroy on itself when hitting an object, however as the bouncing projectile hits multiple times i moved the call to Destroy into
+			individual inherited scripts so that i could control more about how each projectile interacts with the game.
+		</p>
+		<pre class="prettyprint">
+
+#include "ProjectileBase.h"
+#include "Components/StaticMeshComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
+
+// Sets default values
+AProjectileBase::AProjectileBase()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	RootComponent = baseMesh;
+
+	projectileMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
+
+	particleTrail = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("ParticleSystem"));
+	particleTrail->SetupAttachment(RootComponent);
+
+}
+
+// Called when the game starts or when spawned
+void AProjectileBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+	baseMesh->OnComponentHit.AddDynamic(this, &AProjectileBase::OnHit);
+	
+	UGameplayStatics::PlaySoundAtLocation(this, launchSound, GetActorLocation());
+}
+
+// Called every frame
+void AProjectileBase::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void AProjectileBase::TriggerExplosion(float dam, float damRadius, float knock, float knockRadius)
+{
+	TArray<AActor*> ignoredActors;
+
+	auto projectileOwner = GetOwner();
+	if (projectileOwner == nullptr) return;
+	auto ownerInstigator = projectileOwner->GetInstigatorController();
+
+	//vars used in both passes of explosion hits
+	UWorld* worldContext = GetWorld();
+	FVector actorLocation = GetActorLocation();
+
+
+	auto damageTypeClass = UDamageType::StaticClass();
+
+	//apply damage in a radius
+	UGameplayStatics::ApplyRadialDamage(
+		worldContext,
+		dam,
+		actorLocation,
+		damRadius,
+		damageTypeClass,
+		ignoredActors,
+		this,
+		ownerInstigator,
+		false,
+		ECollisionChannel::ECC_Visibility);
+	//sweep radius for actors
+	TArray <FHitResult> hitResult;
+	FCollisionShape sphereCol = FCollisionShape::MakeSphere(knockRadius);
+
+	bool bSweepHit = GetWorld()->SweepMultiByChannel(
+		hitResult,
+		actorLocation,
+		actorLocation + FVector(0.01f, 0.01f, 0.01f),
+		FQuat::Identity,
+		ECC_WorldStatic,
+		sphereCol);
+
+	//Visualises the explosion radii to dial in ranges for each projectile
+	DrawDebugSphere(worldContext, actorLocation, damRadius, 40, FColor::Red, false, 2.0f);
+	DrawDebugSphere(worldContext, actorLocation, knockRadius, 40, FColor::Orange, false, 2.0f);
+
+	//for everything hit in the sweep, apply knockback from the position of the explosion
+	if (bSweepHit)
+	{
+		for (auto& hit : hitResult)
+		{
+			UStaticMeshComponent* meshComp = Cast<UStaticMeshComponent>(hit.GetActor()->GetRootComponent());
+			if (meshComp)
+			{
+				meshComp->AddRadialImpulse(
+			actorLocation, knockRadius, knock, ERadialImpulseFalloff::RIF_Linear, true);
+			}
+		}
+	}
+	//sound and visual fx
+	if (hitParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, hitParticles, GetActorLocation(), GetActorRotation());
+	}
+	if (hitSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, hitSound, GetActorLocation());
+	}
+	if (hitCameraShakeClass)
+	{
+		GetWorld()->GetFirstPlayerController()->ClientPlayCameraShake(hitCameraShakeClass);
+	}
+}
+
+void AProjectileBase::OnHit(
+			UPrimitiveComponent* hitComp, AActor* otherActor,
+			UPrimitiveComponent* otherComp, FVector normalImpulse,
+			const FHitResult& hit)
+{
+	auto projectileOwner = GetOwner();
+
+	if (otherActor && otherActor != this && otherActor != projectileOwner)
+	{
+		if (canExplode)
+		{
+			TriggerExplosion(projectileDamage, projectileDamageRadius, projectileKnockback, projectileKnockbackRadius);
+		}
+	}
+}
+
+</pre>
+	</div>
 </body>
 </html>
