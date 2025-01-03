@@ -282,7 +282,8 @@ void UCPP_LaserSystem::CalculateBeam()
 			knockback damage. Its a relatively simple script but it contains everything i'll need for building on it with my other projectile types.
 			<br /><br />
 			Originally this projectile called Destroy on itself when hitting an object, however as the bouncing projectile hits multiple times i moved the call to Destroy into
-			individual inherited scripts so that i could control more about how each projectile interacts with the game.
+			individual inherited scripts so that i could control more about how each projectile interacts with the game. The main simple projectile mostly uses this projectile base with little difference other
+			than the implimentation of the Destroy call at the end of the explosion trigger.
 		</p>
 		<pre class="prettyprint">
 
@@ -415,5 +416,96 @@ void AProjectileBase::OnHit(
 
 </pre>
 	</div>
+
+	<div class="centralText"><h3> Piercing Projectile </h3> </div>
+
+	<div class="codePanel">
+		<pre class="prettyprint">
+void ACPP_PiercingProjectile::Tick(float DeltaTime)
+{
+	if (!GetOwner())
+	{
+		SetOwner(Cast<ATank>(UGameplayStatics::GetPlayerPawn(this, 0)));
+		TriggerExplosion(originalDamage / 4.f, originalDamRadius / 5.f, originalKnockback / 2.f, originalKnockRadius / 5.f);
+	}
+}
+
+void ACPP_PiercingProjectile::SetPierceCount(int newCount)
+{
+		pierceAmount = newCount;
+}
+
+void ACPP_PiercingProjectile::OnHit(
+			UPrimitiveComponent* hitComp, AActor* otherActor,
+			UPrimitiveComponent* otherComp, FVector normalImpulse, const FHitResult& hit)
+{
+	if (pierceAmount == 0)
+	{
+		projectileDamage = originalDamage;
+		projectileKnockback = originalKnockback;
+	}
+	else
+	{
+		projectileDamage = 0.f;
+		projectileKnockback = 0.f;
+		projectileDamageRadius = 0.f;
+		projectileKnockbackRadius = 0.f;
+	}
+	//Call the original OnHit function from the base projectile
+	Super::OnHit(hitComp, otherActor, otherComp, normalImpulse, hit);
+
+	if (pierceAmount > 0)
+	{
+		//calculate where it should spawn the next projectile
+		FVector spawnLocation = CalculateObjectPenetration(otherActor);
+		ACPP_PiercingProjectile* newProjectile = GetWorld()->SpawnActor<ACPP_PiercingProjectile>(
+			projectileClass,spawnLocation, this->GetActorRotation());
+		//     spawn a new projectile with the same trajectory at the hit location
+		pierceAmount--;
+		newProjectile->SetPierceCount(pierceAmount);
+	}
+	Destroy();
+}
+
+//Calculates object penetration by casting a sweep back towards the projectile hit point to obtain an exit point
+FVector ACPP_PiercingProjectile::CalculateObjectPenetration(AActor* otherActor)
+{
+	FVector actorLocation = this->GetActorLocation();
+
+	//get start and end points for sweep
+	FVector sweepStartLoc = actorLocation + (this->GetActorForwardVector() * traceLength);
+
+	//sweep radius for actors
+	TArray <FHitResult> hitResult;
+	FCollisionShape sphereCol = FCollisionShape::MakeSphere(5.f);
+
+	bool bSweepHit = GetWorld()->SweepMultiByChannel(
+		hitResult,
+		sweepStartLoc,
+		actorLocation,
+		FQuat::Identity,
+		ECC_WorldStatic,
+		sphereCol);
+
+	if (bSweepHit)
+	{
+		for (auto& hit : hitResult)
+		{
+			if (hit.GetActor() == otherActor)
+			{
+				return (hit.Location + (this->GetActorForwardVector() * offset)) ;
+			}
+		}
+	}
+	return sweepStartLoc;
+}
+</pre>
+		<p>
+			The piercing projectile, when it hits an object, will search for the other side of the object it hits and spawn and new version of the pierce projectile with less "pierce count".
+			When the pierce count reaches zero (the pierce count lowering by one for each object it pierces) it will explode like the base projectile on contact but with less force and damage, however 
+			when the piercing count is above zero, the piercing projectile produces small explosions when it pierces an object as it blows through on the other side. 
+		</p>
+	</div>
+
 </body>
 </html>
