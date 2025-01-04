@@ -6,57 +6,57 @@
 </head>
 <html>
 <body>
-    <!-- Top page header and menu-->
-    <div class="header">
-        <h1>Jade Friend</h1>
-        <h3>Sigma-Phoenix Productions</h3>
-    </div>
+	<!-- Top page header and menu-->
+	<div class="header">
+		<h1>Jade Friend</h1>
+		<h3>Sigma-Phoenix Productions</h3>
+	</div>
 
-    <div class="topnav">
-        <div class=" topnav-centered">
-            <a href="../../index.html">Home</a>
-        </div>
+	<div class="topnav">
+		<div class=" topnav-centered">
+			<a href="../../index.html">Home</a>
+		</div>
 
-        <a href="../games.html">Games</a>
-        <a href="../art-animation.html">3D art and Animation</a>
-        <a href="../photography.html">Photography</a>
-
-
-        <div class="topnav-right">
-            <a href="#">Blog</a>
-        </div>
-    </div>
-    <!-- Project Page -->
-    <div class="projectTitle">
-        <h1>
-            Unnamed Tank Game
-        </h1>
-        <p>
-            Unreal 5.2 project primarily using C++, originally based off of Udemy's ToonTanks tutorial but is being developed further.
-            So far i'm really enjoying this project as a way to increase my technical skill with C++ and familiarise myself with the unreal engine.
-        </p>
-    </div>
+		<a href="../games.html">Games</a>
+		<a href="../art-animation.html">3D art and Animation</a>
+		<a href="../photography.html">Photography</a>
 
 
+		<div class="topnav-right">
+			<a href="#">Blog</a>
+		</div>
+	</div>
+	<!-- Project Page -->
+	<div class="projectTitle">
+		<h1>
+			Unnamed Tank Game
+		</h1>
+		<p>
+			Unreal 5.2 project primarily using C++, originally based off of Udemy's ToonTanks tutorial but is being developed further.
+			So far i'm really enjoying this project as a way to increase my technical skill with C++ and familiarise myself with the unreal engine.
+		</p>
+	</div>
 
-    <div class="centralVideo">
-        <iframe width="1120" height="630" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        <h2> Weapon's Showcase</h2>
-    </div>
 
-    <!-- Fire spreading -->
-    <div class="centralText"> <h3> Fire Spreading </h3></div>
-    <div class="codePanel">
 
-        <p>
-            All objects in the game contain the capacity to be set on fire as it is based within the health component. Using a subclass of the DamageType class (UDamageType_Heat), i can identify incoming
-            damage as heat damage and treat it differently, adding to a stored value that when it reaches its maximum will enable the fire spreading.
-            <br /><br />
-            While on fire, objects will send heat-type damage to objects around them every frame for the duration of their burn-time, allowing the fire to spread to other objects through the same
-            health component that allowed it to be set on fire.
-        </p>
+	<div class="centralVideo">
+		<iframe width="1120" height="630" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<h2> Weapon's Showcase</h2>
+	</div>
 
-        <pre class="prettyprint">
+	<!-- Fire spreading -->
+	<div class="centralText"> <h3> Fire Spreading </h3></div>
+	<div class="codePanel">
+
+		<p>
+			All objects in the game contain the capacity to be set on fire as it is based within the health component. Using a subclass of the DamageType class (UDamageType_Heat), i can identify incoming
+			damage as heat damage and treat it differently, adding to a stored value that when it reaches its maximum will enable the fire spreading.
+			<br /><br />
+			While on fire, objects will send heat-type damage to objects around them every frame for the duration of their burn-time, allowing the fire to spread to other objects through the same
+			health component that allowed it to be set on fire.
+		</p>
+
+		<pre class="prettyprint">
 void UHealthComponent::OnFire()
 {
 
@@ -132,16 +132,16 @@ void UHealthComponent::DamageTaken(
 }
 </pre>
 
-    </div>
+	</div>
 
-    <!-- Laser Beam -->
+	<!-- Laser Beam -->
 
 	<div class="centralText">
 		<h3> Laser System </h3>
 	</div>
 
-    <div class="codePanel">
-        <pre class="prettyprint">
+	<div class="codePanel">
+		<pre class="prettyprint">
 void UCPP_LaserSystem::BeginPlay()
 {
 	Super::BeginPlay();
@@ -251,34 +251,34 @@ void UCPP_LaserSystem::CalculateBeam()
 }
 
 </pre>
-        <p>
+		<p>
 			i adapted my laser script from
 			<a target="_blank" href="https://www.youtube.com/watch?v=sjUtDBp15l8"> this laser reflection tutorial </a>
-			which was designed for first-person gameplay and didnt contain an implimentation to select what reflects and 
-			apply damage. My laser script checks if the object it has hit contains a simple (mostly blank) component, and then 
-			it will process the next beam of the laser and repeat until it goes through the maximum beamcount initialised at the 
+			which was designed for first-person gameplay and didnt contain an implimentation to select what reflects and
+			apply damage. My laser script checks if the object it has hit contains a simple (mostly blank) component, and then
+			it will process the next beam of the laser and repeat until it goes through the maximum beamcount initialised at the
 			start of the level.
 			<br /><br />
 			To apply damage, i take advantage of the health component and the ApplyDamage function in Gameplay Statics to apply a subclass
 			of the UDamageType component that will be processed differently when it reaches the object it is hitting, setting the object on fire instead
 			of applying direct damage to the object's HP.
-        </p>
+		</p>
 
-    </div>
-    <!-- Ammunition Types-->
+	</div>
+	<!-- Ammunition Types-->
 	<div class="centralText">
 		<h2> Ammunition Types & Weapon Switching </h2>
-        <p>
-            For the other variations of ammunition that the player can use (Basic, Bounce and Piercing), they inherit from a single projectile that contains the base functions for explosions,
-            knockback and the ProjectileMovementComponent. Thanks to this inheritence, the types of ammunition can be stored as Subclasses of the primary class and easily switched out in the
-            firing mechanic which can spawn any subclass of the initial firing mechanic
-        </p>
+		<p>
+			For the other variations of ammunition that the player can use (Basic, Bounce and Piercing), they inherit from a single projectile that contains the base functions for explosions,
+			knockback and the ProjectileMovementComponent. Thanks to this inheritence, the types of ammunition can be stored as Subclasses of the primary class and easily switched out in the
+			firing mechanic which can spawn any subclass of the initial firing mechanic
+		</p>
 		<h3> Base Projectile </h3>
 	</div>
 
 	<div class="codePanel">
 		<p>
-			The base projectile contains the main function for producing explosion which applies radial damage and sweeps nearby physics objects to do a radial impulse for 
+			The base projectile contains the main function for producing explosion which applies radial damage and sweeps nearby physics objects to do a radial impulse for
 			knockback damage. Its a relatively simple script but it contains everything i'll need for building on it with my other projectile types.
 			<br /><br />
 			Originally this projectile called Destroy on itself when hitting an object, however as the bouncing projectile hits multiple times i moved the call to Destroy into
@@ -502,9 +502,58 @@ FVector ACPP_PiercingProjectile::CalculateObjectPenetration(AActor* otherActor)
 </pre>
 		<p>
 			The piercing projectile, when it hits an object, will search for the other side of the object it hits and spawn and new version of the pierce projectile with less "pierce count".
-			When the pierce count reaches zero (the pierce count lowering by one for each object it pierces) it will explode like the base projectile on contact but with less force and damage, however 
-			when the piercing count is above zero, the piercing projectile produces small explosions when it pierces an object as it blows through on the other side. 
+			When the pierce count reaches zero (the pierce count lowering by one for each object it pierces) it will explode like the base projectile on contact but with less force and damage, however
+			when the piercing count is above zero, the piercing projectile produces small explosions when it pierces an object as it blows through on the other side.
 		</p>
+	</div>
+
+	<div class="centralText"><h3> Bounce Projectile </h3> </div>
+
+	<div class="codePanel">
+		<p>
+			Compared to the Laser system and the piercing projectile, the bouncing projectile doesnt use as much code and instead uses the physics behaviour given to it by the 
+			projectile movement component to make it bounce around the level. Instead my code focuses on controlling when it destroys and how it explodes when colliding with objects.
+			<br /><br />
+			Put simply, when the velocity of the bouncing projectile goes below a certain amount, typically after 2-3 bounces, it disables the ability for it to explode until its velocity reaches 
+			zero, it performs a larger explosion that does more damage before disappearing from the level. Initially i wanted to keep the projectiles in the level so that tou could get them
+			unstuck or keep them moving, but eventually i decided it would be better for the projectile to "Finish" with a larger explosion to make it more fun to get behind physics objects and send them flying
+			from weird places.
+		</p>
+		<pre class="prettyprint">
+#include "CPP_BounceProjectile.h"
+
+void ACPP_BounceProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+
+}
+
+
+// Called every frame
+void ACPP_BounceProjectile::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	FVector currentVelocity = GetVelocity();
+	
+	
+
+	if (currentVelocity.Length() < threshold && canExplode)
+	{
+		canExplode = false;
+
+	}
+	else if (currentVelocity.Length() == 0)
+	{
+		TriggerExplosion(projectileDamage * 2, projectileDamageRadius * 2, projectileKnockback * 2, projectileKnockbackRadius * 2);
+		Destroy();
+	}
+
+}
+</pre>
+
 	</div>
 
 </body>
