@@ -29,15 +29,23 @@
 	<!-- Project Page -->
 	<div class="projectTitle">
 		<h1>
-			Unnamed Tank Game
+			The Tank Project
 		</h1>
 		<p>
 			Unreal 5.2 project primarily using C++, originally based off of Udemy's ToonTanks tutorial but is being developed further.
 			So far i'm really enjoying this project as a way to increase my technical skill with C++ and familiarise myself with the unreal engine.
+			Currently I'm not sure where to be taking this in the future, but I had a lot of fun making everything.
 		</p>
 	</div>
 
+	<div class="centralButton">
+		<a target="_blank" href="https://sigmaoftheforge.itch.io/the-tank-project">Play Now on Itch.io</a>
+	</div>
 
+	<div class="centralVideo">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/NuZKS-Wa9LY?si=D_Wl7D16DCksCWAg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<h2> Game 0.1.0 Release Trailer!</h2>
+	</div>
 
 	<div class="centralVideo">
 		<iframe width="1120" height="630" src="https://www.youtube.com/embed/I3CF38qqEBI?si=TEbl_Jj6QEWrtl2V" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -511,10 +519,10 @@ FVector ACPP_PiercingProjectile::CalculateObjectPenetration(AActor* otherActor)
 
 	<div class="codePanel">
 		<p>
-			Compared to the Laser system and the piercing projectile, the bouncing projectile doesnt use as much code and instead uses the physics behaviour given to it by the 
+			Compared to the Laser system and the piercing projectile, the bouncing projectile doesnt use as much code and instead uses the physics behaviour given to it by the
 			projectile movement component to make it bounce around the level. Instead my code focuses on controlling when it destroys and how it explodes when colliding with objects.
 			<br /><br />
-			Put simply, when the velocity of the bouncing projectile goes below a certain amount, typically after 2-3 bounces, it disables the ability for it to explode until its velocity reaches 
+			Put simply, when the velocity of the bouncing projectile goes below a certain amount, typically after 2-3 bounces, it disables the ability for it to explode until its velocity reaches
 			zero, it performs a larger explosion that does more damage before disappearing from the level. Initially i wanted to keep the projectiles in the level so that tou could get them
 			unstuck or keep them moving, but eventually i decided it would be better for the projectile to "Finish" with a larger explosion to make it more fun to get behind physics objects and send them flying
 			from weird places.
